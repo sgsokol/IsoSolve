@@ -1,0 +1,6 @@
+include licence_en.txt
+include version.txt
+include README.*
+recursive-include doc/source *
+recursive-include doc/html *
+include doc/*.pdf

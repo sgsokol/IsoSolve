@@ -1,0 +1,455 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>User’s manual &#8212; IsoSolve 0.9.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API documentation" href="modules.html" />
+    <link rel="prev" title="IsoSolve’s documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="API documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="IsoSolve’s documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IsoSolve 0.9.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="user-s-manual">
+<h1>User’s manual<a class="headerlink" href="#user-s-manual" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>To install the latest stable release run in a shell</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>pip install --user isosolve
+</pre></div>
+</div>
+<p>Use <code class="docutils literal"><span class="pre">pip3</span></code> instead of <code class="docutils literal"><span class="pre">pip</span></code> when python2 and python3 are both accessible.
+An executable script may be installed in a directory which is not in your <code class="docutils literal"><span class="pre">PATH</span></code> variable. If it is the case, you will be advertised accordingly during the installation process. Add the corresponding directory to the PATH to be able to launch <code class="docutils literal"><span class="pre">isosolve</span></code> from any directory on your computer.</p>
+<p>To test if the installation worked as expected run:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>isosolve -v
+</pre></div>
+</div>
+<p>It should just print the program name followed by its version number, e.g.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>isosolve 1.0
+</pre></div>
+</div>
+</div>
+<div class="section" id="uninstall">
+<h2>Uninstall<a class="headerlink" href="#uninstall" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>pip uninstall isosolve
+</pre></div>
+</div>
+</div>
+<div class="section" id="upgrade">
+<h2>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>pip install --user --upgrade isosolve
+</pre></div>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>IsoSolve depends on following Python modules:</dt>
+<dd><ul class="first last simple">
+<li>sympy</li>
+<li>nlsic</li>
+<li>numpy</li>
+<li>scipy</li>
+<li>pandas</li>
+<li>mdutils</li>
+<li>markdown</li>
+</ul>
+</dd>
+</dl>
+<p>For the first time installation or upgrade of nlsic module, a Fortran compiler is required. If it is not present on your system, you’ll have to install it by your own means. Here are some indications for different systems. If the yourth is not present, ask for help your local computer guru.</p>
+<div class="section" id="conda-multi-platform">
+<h3>Conda (multi-platform)<a class="headerlink" href="#conda-multi-platform" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>conda install -c conda-forge fortran-compiler
+</pre></div>
+</div>
+</div>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p>On Debian-like distributions you can do:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>apt-get install gfortran
+</pre></div>
+</div>
+<p>On RPM-like:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>yum install gcc-gfortran
+</pre></div>
+</div>
+<p>On Mageia:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>urpmi gcc-gfortran
+</pre></div>
+</div>
+</div>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>On windows platform we used conda solution. If you don’t have conda you can try to install <a class="reference external" href="http://www.cygwin.org/cygwin/">cygwin</a> and choose a package <code class="docutils literal"><span class="pre">gcc-fortran</span></code> (not tested)</p>
+</div>
+<div class="section" id="macos-not-tested">
+<h3>MacOS (not tested)<a class="headerlink" href="#macos-not-tested" title="Permalink to this headline">¶</a></h3>
+<p>If you have <a class="reference external" href="https://brew.sh/">Homebrew</a> installed then you can try</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>brew update
+brew install gcc
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">gfortran</span></code> is part of <code class="docutils literal"><span class="pre">gcc</span></code> package.</p>
+<p>If Python dependencies are lacking on your system they will be automatically installed. On the other hand, if you uninstall IsoSolve and don’t need anymore dependencies, you’ll have to uninstall them manually.</p>
+</div>
+</div>
+<div class="section" id="quick-startup">
+<h2>Quick startup<a class="headerlink" href="#quick-startup" title="Permalink to this headline">¶</a></h2>
+<p>To test IsoSolve on prepared example data, download two files : <a class="reference external" href="https://github.com/sgsokol/isosolve/ALA_mapping.tsv">ALA_mapping.tsv</a> and <a class="reference external" href="https://github.com/sgsokol/isosolve/ALA_measurements.tsv">ALA_measurements.tsv</a>. The first file describes a mapping of different measurement techniques on isotopomers of Alanine amino acid labeled with ¹³C and the second one (optional) provides measured data and their standard deviations (SD).</p>
+<p>Run the following command from the directory having these files:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>isosolve -d ALA_measurements.tsv ALA_mapping.tsv
+</pre></div>
+</div>
+<p>or just</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>isosolve ALA_mapping.tsv
+</pre></div>
+</div>
+<p>if you wish only symbolic formulas.</p>
+<div class="section" id="input-output-files">
+<h3>Input/Output files<a class="headerlink" href="#input-output-files" title="Permalink to this headline">¶</a></h3>
+<p>IsoSolve takes as input isotopic mapping for a given metabolite, e.g. carbon isotopologue distribution measured by MS or specific enrichments measured by NMR, which must be mapped to the isotopic space. This mapping file is a tab-separated-values (TSV) file and is organized as shown in the following table:</p>
+<table border="1" class="docutils" id="id1">
+<caption><span class="caption-text">Example of input file</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">bcmer</th>
+<th class="head">HSQC_Ca</th>
+<th class="head">HSQC_Cb</th>
+<th class="head">HACO</th>
+<th class="head">JRES_Ha</th>
+<th class="head">JRES_Hb</th>
+<th class="head">HACO-DIPSY</th>
+<th class="head">GC-MS</th>
+<th class="head">LC-MS</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>000</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>e</td>
+<td>t</td>
+<td>&#160;</td>
+<td>o</td>
+<td>g</td>
+</tr>
+<tr class="row-odd"><td>001</td>
+<td>&#160;</td>
+<td>k</td>
+<td>&#160;</td>
+<td>e</td>
+<td>u</td>
+<td>&#160;</td>
+<td>p</td>
+<td>h</td>
+</tr>
+<tr class="row-even"><td>100</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>r</td>
+<td>e</td>
+<td>t</td>
+<td>&#160;</td>
+<td>o</td>
+<td>h</td>
+</tr>
+<tr class="row-odd"><td>101</td>
+<td>&#160;</td>
+<td>k</td>
+<td>r</td>
+<td>e</td>
+<td>u</td>
+<td>&#160;</td>
+<td>p</td>
+<td>i</td>
+</tr>
+<tr class="row-even"><td>010</td>
+<td>a</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>f</td>
+<td>t</td>
+<td>m</td>
+<td>p</td>
+<td>h</td>
+</tr>
+<tr class="row-odd"><td>011</td>
+<td>b</td>
+<td>l</td>
+<td>&#160;</td>
+<td>f</td>
+<td>u</td>
+<td>m</td>
+<td>q</td>
+<td>i</td>
+</tr>
+<tr class="row-even"><td>110</td>
+<td>c</td>
+<td>&#160;</td>
+<td>s</td>
+<td>f</td>
+<td>t</td>
+<td>n</td>
+<td>p</td>
+<td>i</td>
+</tr>
+<tr class="row-odd"><td>111</td>
+<td>d</td>
+<td>l</td>
+<td>s</td>
+<td>f</td>
+<td>u</td>
+<td>n</td>
+<td>q</td>
+<td>j</td>
+</tr>
+</tbody>
+</table>
+<p>where the entry meaning is following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>each row correspond to a given binary cumomer, e.g. <code class="docutils literal"><span class="pre">010x</span></code> or <code class="docutils literal"><span class="pre">010</span></code>;</li>
+<li>each column corresponds to a given experiment type, e.g. <code class="docutils literal"><span class="pre">HSQC_Cb</span></code>;</li>
+<li>each cell contains a variable name, e.g. <code class="docutils literal"><span class="pre">a</span></code>, <code class="docutils literal"><span class="pre">b</span></code> etc. or empty, i.e. NA;</li>
+<li>each variable name can appear multiple times in a given column but not in different columns. If a variable appears in several rows, these rows are considered as mixed in equal parts in a given measurement method. E.g. in HSQC_Cb, contributions of patterns <code class="docutils literal"><span class="pre">001</span></code> and <code class="docutils literal"><span class="pre">101</span></code> are mixed in one variable <code class="docutils literal"><span class="pre">k</span></code>, and contributions of <code class="docutils literal"><span class="pre">011</span></code> and <code class="docutils literal"><span class="pre">111</span></code> are mixed in another one, <code class="docutils literal"><span class="pre">l</span></code>. Other rows in this column must be left empty as they don’t contribute to any measurement.</li>
+</ul>
+</div></blockquote>
+<p>In the above example, running IsoSolve will produce two files: <code class="docutils literal"><span class="pre">ALA_mapping.md</span></code> (plain text, MarkDown format) and <code class="docutils literal"><span class="pre">ALA_mapping.html</span></code>. The latter should automatically open in your browser. If not, open it manually. This output file contains formulas for definition of isotopomers, cumomers, and EMUs (ICE) depending on provided measurements. An analysis is made to determine how many of each ICE can be defined by measurements and which are still undefined. The file content is quite self-explanatory. If everything worked as expected it should be similar to <a class="reference external" href="https://github.com/sgsokol/isosolve/ALA_mapping.html">ALA_mapping.html</a>. Small differences are allowed, e.g. the redundant measurements maybe not the same as in the example file but their number (10) should coincide.</p>
+<p>If <code class="docutils literal"><span class="pre">--inchi</span></code> option is activated, it will produce a series of additional TSV files having <code class="docutils literal"><span class="pre">_inchi_</span></code> in their names. They will contain International Chemical Identifiers (InChI) for involved isotopomers, cumomers and EMUs as well as for elementary measurable combinations. It is important to note that atom numbers used in those InChI are relative to only carbon atoms numbered from left to right in the label masks provided by user in his input file. It is up to user to renumber them according to conventional numbering appropriate to the used molecule.</p>
+<p>For elementary measurable combinations, InChI file can contain entries with multiple isotopomers in them. To be able to put one isotopomer per row, an additional column <code class="docutils literal"><span class="pre">Group</span> <span class="pre">Id</span></code> is introduced. The rows having identical entries in <code class="docutils literal"><span class="pre">Group</span> <span class="pre">Id</span></code> must be grouped together.</p>
+<p>For fine-tuning <code class="docutils literal"><span class="pre">isosolve</span></code> usage, read the following section about command line options. For programmatic use, see the section <a class="reference internal" href="modules.html#api"><span class="std std-ref">API documentation</span></a>.</p>
+</div>
+</div>
+<div class="section" id="isosolve-command-line-options">
+<span id="cli"></span><h2><code class="docutils literal"><span class="pre">isosolve</span></code> command line options<a class="headerlink" href="#isosolve-command-line-options" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>usage: isosolve.py [-h] [-c COLSEL] [-t] [-d DATA] [-w] [-s SEED] [-r]</dt>
+<dd>[-p PATH] [-f] [-v]
+mm</dd>
+</dl>
+<p>calculate isotopomer/cumomer/EMU expressions (symbolic and optionally numeric) by a combination of isotope labeling measurements (NMR, MS, …)</p>
+<dl class="docutils">
+<dt>positional arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>mm                    file name (tsv) providing measure matrix which is organized as follows:</dt>
+<dd><ul class="first last simple">
+<li>each row corresponds to a given binary cumomer, e.g. ‘010x’</li>
+<li>each column corresponds to a given experiment type, e.g. ‘HSQC-C_beta’</li>
+<li>each cell contains a variable name, e.g. ‘a’, ‘b’ etc. or empty, i.e. NA</li>
+<li>each variable name can appear multiple times in a given column but not in different columns. If a variable appears in several rows, these rows are considered as mixed in equal parts in a given measurement method. E.g. in HSQC-C_beta, contributions of patterns ‘001x’ and ‘101x’ are mixed in one variable, say ‘k’, and contributions of ‘011x’ and ‘111x’ are mixed in another one, say ‘l’. Other rows in this column must be left empty as they don’t contribute to any measurement.</li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt>optional arguments:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></td>
+<td>show this help message and exit</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-c <var>COLSEL</var></span>, <span class="option">--colsel <var>COLSEL</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td><dl class="first last docutils">
+<dt>column selection (full set by default).</dt>
+<dd><p class="first">Can be a slice, comma separated list of integers or names,
+regular expression, or a mix of all this. In a slice,
+negative number means counting from the end. In a list,
+if given a negative numbers or names starting with ‘-‘,
+the corresponding columns are excluded from treatment.
+Names can be given as Python regular expressions.
+The order of column selection is irrelevant.</p>
+<dl class="last docutils">
+<dt>Examples:</dt>
+<dd><ul class="first last simple">
+<li>‘1:3’ - first 3 columns;</li>
+<li>‘:3’ - the same;</li>
+<li>‘:-1’ - all columns but the last;</li>
+<li>‘2::2’ - even columns;</li>
+<li>‘1,3,6’ - first, third and sixth columns;</li>
+<li>‘HSQC.*’ - columns with names started by ‘HSQC’;</li>
+<li>‘-HN.*’ - all columns except starting with ‘HN’</li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-t</span>, <span class="option">--TIMEME</span></kbd></td>
+<td>activate or not (default) CPU time printing. Useful only for debugging or issue reporting.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-d <var>DATA</var></span>, <span class="option">--data <var>DATA</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>file name with 3 columns: name, value, and sd. Numeric values in columns ‘value’ and ‘sd’ must be non-negative and positive respectively. Fields are tab-separated, comments start with sharp-sign ‘#’</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-w</span>, <span class="option">--write</span></kbd></td>
+<td>force .md and .html file writing even in non CLI mode</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-s <var>SEED</var></span>, <span class="option">--seed <var>SEED</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>integer value used as a seed for pseudo-random drawing. Useful only for debugging or issue reporting.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-r</span>, <span class="option">--rand</span></kbd></td>
+<td>make random draws for numerical tests of formulas. Useful only for debugging or issue reporting.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-p <var>PATH</var></span>, <span class="option">--path <var>PATH</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>path for .md and html files. If it ends by ‘/’ it is interpreted as a directory path which is created if nonexistent. Otherwise, it is interpreted as a base before .md and .html extensions. If not given, .md and .html are written in the same directory with the same basename (before the extension) as ‘MM’ file</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-f</span>, <span class="option">--fast</span></kbd></td>
+<td>skip calculations of measurable combinations</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-i</span>, <span class="option">--inchi</span></kbd></td>
+<td>write InChi files</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-v</span>, <span class="option">--version</span></kbd></td>
+<td>print version number on stdout and exit. Useful only for debugging or issue reporting.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="jupyter-notebook">
+<h2>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h2>
+<p>IsoSolve can be used as a Python module that you can import directly, for instance in <a class="reference external" href="https://test-jupyter.readthedocs.io/en/latest/install.html">Jupyter</a> notebooks or in your own software.
+We showcase IsoSolve usage in a Jupyter notebook distributed via this <a class="reference external" href="https://github.com/MetaSys-LISBP/IsoSolve_notebook/">repository</a>. It is authored by Pierre Millard (TBI/INRAE, France).</p>
+<p>If not yet done, you can install Jupyter by:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>pip3 install --user jupyter
+</pre></div>
+</div>
+<p>Some dependencies are specific to our notebook, not to IsoSolve itself. If not available on your system, they can be installed with:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>pip3 install --user seaborn mathplotlib
+</pre></div>
+</div>
+<p>Download and unpack the notebook’s <a class="reference external" href="https://github.com/MetaSys-LISBP/IsoSolve_notebook/archive/main.tar.gz">tarball</a> and go in a shell to the notebook’s directory.</p>
+<p>After that, you are ready to examine and execute the notebook by launching:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>jupyter notebook IsoSolve.ipynb
+</pre></div>
+</div>
+<p>After launching, the notebook will open in your web browser where in each cell you can read/modify/execute a proposed code as well as read accompanying comments.
+Some cells can take a while to execute, so we distribute also an HTML file showing the whole <a class="reference external" href="IsoSolve.html">notebook’s output</a> after execution. Your own output should be similar to this one.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> User's manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uninstall">Uninstall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-startup">Quick startup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isosolve-command-line-options"><code class="docutils literal"><span class="pre">isosolve</span></code> command line options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook">Jupyter notebook</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html"> API documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">IsoSolve’s documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="next chapter">API documentation</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="API documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="IsoSolve’s documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IsoSolve 0.9.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, INRAE/INSA/CNRS.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

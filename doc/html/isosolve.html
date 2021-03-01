@@ -1,0 +1,382 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>isosolve module &#8212; IsoSolve 0.9.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="API documentation" href="modules.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="API documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IsoSolve 0.9.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">API documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-isosolve">
+<span id="isosolve-module"></span><h1>isosolve module<a class="headerlink" href="#module-isosolve" title="Permalink to this headline">¶</a></h1>
+<p>Take symbolic measure matrix and reconstruct possible isotopomer/cumomer/emu groups (as elementary as possible, idealy each group composed of only one i/c/e) for each combination of measurement methods</p>
+<dl class="class">
+<dt id="isosolve.Object">
+<em class="property">class </em><code class="descclassname">isosolve.</code><code class="descname">Object</code><a class="headerlink" href="#isosolve.Object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Object to which user can add fields</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.assign">
+<code class="descclassname">isosolve.</code><code class="descname">assign</code><span class="sig-paren">(</span><em>name</em>, <em>value</em>, <em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.assign" title="Permalink to this definition">¶</a></dt>
+<dd><p>assign a ‘value’ to ‘name’ in dictionary ‘d’, e.g. ‘d’ can be locals(). Return ‘value’.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.dhms">
+<code class="descclassname">isosolve.</code><code class="descname">dhms</code><span class="sig-paren">(</span><em>f</em>, <em>dig=2</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.dhms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert float number ‘f’ representing seconds to a ‘D days Hh Mm Ss</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.e2li">
+<code class="descclassname">isosolve.</code><code class="descname">e2li</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.e2li" title="Permalink to this definition">¶</a></dt>
+<dd><p>transform expression ‘e’ in a nested list. Each nested level corresponds to Add, Mul and Pow arguments, Add being the highest level.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.ech">
+<code class="descclassname">isosolve.</code><code class="descname">ech</code><span class="sig-paren">(</span><em>m</em>, <em>d={}</em>, <em>c={}</em>, <em>sc={}</em>, <em>nd={}</em>, <em>ld={}</em>, <em>fast=False</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.ech" title="Permalink to this definition">¶</a></dt>
+<dd><p>reduce augmented matrix m to echelon form applying substitutions from d. Return echelon matrix and permutation list of col-index couples. No check is made for non zero terms in the last column in all zero rows.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.echsol">
+<code class="descclassname">isosolve.</code><code class="descname">echsol</code><span class="sig-paren">(</span><em>m</em>, <em>*unk</em>, <em>pe=[]</em>, <em>d={}</em>, <em>c={}</em>, <em>sc={}</em>, <em>nsub={}</em>, <em>fast=False</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.echsol" title="Permalink to this definition">¶</a></dt>
+<dd><p>solves augmented linear system in echelon form resulted from ech(…).
+Unknown symbols are taken from *unk. pe is a possible permutation list of ij-tuples from ech(…).
+Return a symbolic column vector</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.hascumo">
+<code class="descclassname">isosolve.</code><code class="descname">hascumo</code><span class="sig-paren">(</span><em>s1</em>, <em>s2</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.hascumo" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a cumulated string (or None if not conformant) for binary cumomers in s1 and s2. E.g. 01x+11x =&gt; x1x</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.iainb">
+<code class="descclassname">isosolve.</code><code class="descname">iainb</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.iainb" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a list of indexes of a in b or None if a is not strictly in b. An empty list is returned for empty a. Repeated values in a must be repeated at least the same number of times in b.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.is_intstr">
+<code class="descclassname">isosolve.</code><code class="descname">is_intstr</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.is_intstr" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if a string ‘s’ represents exactly an integer number</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.isstr">
+<code class="descclassname">isosolve.</code><code class="descname">isstr</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.isstr" title="Permalink to this definition">¶</a></dt>
+<dd><p>return True if ‘s’ is of type ‘str’</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.lfact">
+<code class="descclassname">isosolve.</code><code class="descname">lfact</code><span class="sig-paren">(</span><em>e</em>, <em>esub={}</em>, <em>cache={}</em>, <em>scache={}</em>, <em>pr=False</em>, <em>nsub={}</em>, <em>fast=False</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.lfact" title="Permalink to this definition">¶</a></dt>
+<dd><p>factorize terms in expression ‘e’</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.lico2tb">
+<code class="descclassname">isosolve.</code><code class="descname">lico2tb</code><span class="sig-paren">(</span><em>lico</em>, <em>mdFile=None</em>, <em>text_align='center'</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.lico2tb" title="Permalink to this definition">¶</a></dt>
+<dd><p>transform list of columns in lico to a flat list of strings suitable for md table writing. Write md table if mdFile is set.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.limi">
+<code class="descclassname">isosolve.</code><code class="descname">limi</code><span class="sig-paren">(</span><em>li</em>, <em>negative=False</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.limi" title="Permalink to this definition">¶</a></dt>
+<dd><p>apply or not sign ‘-‘ to all terms of the list li</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.main">
+<code class="descclassname">isosolve.</code><code class="descname">main</code><span class="sig-paren">(</span><em>li=None</em>, <em>mm=None</em>, <em>colsel=None</em>, <em>tim=None</em>, <em>data=None</em>, <em>w=None</em>, <em>s=None</em>, <em>rd=None</em>, <em>path=None</em>, <em>fast=False</em>, <em>vers=None</em>, <em>inchi=False</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve symbolically and numerically iso-, cumo- and EMU-mers from isotope labeling measurements (NMR, MS, …)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>li</strong> (<em>list</em><em>, </em><em>optional</em>) – list of argument to be processed, typically a <code class="docutils literal"><span class="pre">sys.argv[1:]</span></code>, cf. <code class="docutils literal"><span class="pre">isosolve</span> <span class="pre">-h</span></code> or <a class="reference internal" href="manual.html#cli"><span class="std std-ref">isosolve command line options</span></a> section for parameter significance. Defaults to None.</li>
+<li><strong>mm</strong> (<em>str</em><em> or </em><em>pandas.FataFrame</em><em>, </em><em>optional</em>) – mapping matrix describes symbolically the mapping of each measurements method to isotopic space. Can be a file name in tsv format or a pandas data.frame. Either this parameter must be set or the only positional argument in li. Defaults to None.</li>
+<li><strong>colsel</strong> (<em>str</em><em> or </em><em>iterable</em><em>, </em><em>optional</em>) – if str, coma separated column selection from mm. The syntax is described in <code class="docutils literal"><span class="pre">isosolve</span> <span class="pre">-h</span></code>. If iterable, a collection of items describing column selection. Each item can be an integer (positive or negative for exclusion), slice or string with column name. Column numbers are 1-based (not 0-based as usual for Python). Defaults to None which is equivalent to proceeding all the columns from mm.</li>
+<li><strong>tim</strong> (<em>logical</em><em>, </em><em>optional</em>) – if True, print CPU time after some key steps. Defaults to None.</li>
+<li><strong>data</strong> (<em>str</em><em> or </em><em>pandas.DataFrame</em><em>, </em><em>optional</em>) – if DataFrame, numeric values and sd of measurements described in mm. If str, a file name in tsv format with such data in three columns: name, value, sd. Defaults to None.</li>
+<li><strong>w</strong> (<em>logical</em><em>, </em><em>optional</em>) – if True, write formatted results in .md (plain text, MarkDown format) and .html files. The basis of file name is the same as in mm when mm is string, or <code class="docutils literal"><span class="pre">mm</span></code> if mm is a DataFrame. The name <code class="docutils literal"><span class="pre">mm</span></code> can be overwritten with path parameter (cf. hereafter). Defaults to None which is equivalent to True when used in command line and to False when used programmatically.</li>
+<li><strong>s</strong> (<em>int</em><em>, </em><em>optional</em>) – seed for pseudo random generation. When used, randomly drawn values become reproducible. Only useful for debugging or issue reporting. Defaults to None.</li>
+<li><strong>rd</strong> (<em>logical</em><em>, </em><em>optional</em>) – if True, use randomly generated values for checking obtained formulas. In the output HTML file, numerical values that are not coinciding are typeset in <strong>bold</strong>. Only useful for debugging and issue reporting. Defaults to None.</li>
+<li><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – directory (when ends with “/”) of file name (otherwise) for formatted output. Can be useful when mm is a DataFrame. Defaults to None which is equivalent to the current working directory.</li>
+<li><strong>fast</strong> (<em>logical</em><em>, </em><em>optional</em>) – if True, skip calculation of elementary measurable combinations.</li>
+<li><strong>vers</strong> (<em>logical</em><em>, </em><em>optional</em>) – if True, print the version number and return without any result.</li>
+<li><strong>inchi</strong> – if True, writes TSV files with International Chemical Identifiers (InChI) for isotopomers, cumomers, EMUs and elementary measurable combinations.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>dictionary with the following entries:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">xbc:</th><td class="field-body"><p class="first">1-column DataFrame, randomly drawn values for isotopomers;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">xv:</th><td class="field-body"><p class="first">dict, key=measurement name and value=numeric value deduced from xbc;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">am:</th><td class="field-body"><p class="first">sympy Matrix, augmented matrix of system equations. The last column is the right hand side;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rdn_mes:</th><td class="field-body"><p class="first">list, names of redundant measurements;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">smm:</th><td class="field-body"><p class="first">DataFrame, mapping matrix after column selection;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">mmd:</th><td class="field-body"><p class="first">dict, key=measurement name, value=numpy array with isotopomer indexes mapped onto this measurements;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">uvals:</th><td class="field-body"><p class="first">dict, key=method name (i.e. column name in mm), value=list of unique measurement names involved in this method;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">sy_meas:</th><td class="field-body"><p class="first">list, symbolic equations defining measurements;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">sbc:</th><td class="field-body"><p class="first">dict, key=isotopomer name (i.e. row name in mm), value=isotopomer symbolic variable;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">sols:</th><td class="field-body"><p class="first">list, symbolic solution for isotopomers. The order is the same as in mm;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">vsubs:</th><td class="field-body"><p class="first">dict, key=full symbolic expression, value=simplified symbolic expression. Used for simplification procedures;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">metrics:</th><td class="field-body"><p class="first">dict, the fields are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">idef:</th><td class="field-body">list, defined isotopomer indexes;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">idef_c:</th><td class="field-body">set, indexes of defined cumomers;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">idef_e:</th><td class="field-body">dict, key=EMU name, value=set of defined M+i mass isotopologues in this EMU;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">emusol:</th><td class="field-body"><p class="first">dict, key=EMU name, value=list of symbolic solutions for M+i;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">cusol:</th><td class="field-body"><p class="first">dict, key=cumomer name, value=symbolic solution;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ls:</th><td class="field-body"><p class="first">dict, least square solution. The fields are:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">iso:</th><td class="field-body">list, isotopomer values and sd;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">cov:</th><td class="field-body">isotopomer covariance matrix;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">cumo:</th><td class="field-body">list, cumomer values and sd;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">emu:</th><td class="field-body">list of dicts. Each dict has a key=EMU name and value=list of values (the first dict) or sd (the second one);</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">mec:</th><td class="field-body">list, measurable elementary combinations values and sd;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">inchi:</th><td class="field-body"><p class="first">dict, InChI information. The fields are:</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">iso:</th><td class="field-body">DataFrame for isotopomers;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">cumo:</th><td class="field-body">DataFrame for cumomers;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">emu:</th><td class="field-body">DataFrame for EMUs;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">mcomb:</th><td class="field-body">DataFrame for measurable elementary combinations;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.main_arg">
+<code class="descclassname">isosolve.</code><code class="descname">main_arg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.main_arg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for <cite>main(li=sys.argv[1:])</cite> call when used from executable script</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.new_header">
+<code class="descclassname">isosolve.</code><code class="descname">new_header</code><span class="sig-paren">(</span><em>level=None</em>, <em>title=''</em>, <em>mdFile=None</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.new_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="isosolve.partcomb">
+<code class="descclassname">isosolve.</code><code class="descname">partcomb</code><span class="sig-paren">(</span><em>x</em>, <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.partcomb" title="Permalink to this definition">¶</a></dt>
+<dd><p>return iterator of iterator tuples ([p distinct elements of x], [the rest len(x)-p distinct elements of x])</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.pdiff">
+<code class="descclassname">isosolve.</code><code class="descname">pdiff</code><span class="sig-paren">(</span><em>expr</em>, <em>vs</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.pdiff" title="Permalink to this definition">¶</a></dt>
+<dd><p>partial derivatives of expr by vars in vs</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.revenum">
+<code class="descclassname">isosolve.</code><code class="descname">revenum</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.revenum" title="Permalink to this definition">¶</a></dt>
+<dd><p>reversed enumerated iterable x</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.rsubs">
+<code class="descclassname">isosolve.</code><code class="descname">rsubs</code><span class="sig-paren">(</span><em>e</em>, <em>d</em>, <em>c={}</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.rsubs" title="Permalink to this definition">¶</a></dt>
+<dd><p>restricted substitution of keys from ‘d’ found in ‘e’ by d[key]. c is an optional cache dict</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.setsub">
+<code class="descclassname">isosolve.</code><code class="descname">setsub</code><span class="sig-paren">(</span><em>l</em>, <em>it</em>, <em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.setsub" title="Permalink to this definition">¶</a></dt>
+<dd><p>in a list l set values with indexes from it to v, i.e. l[it]=v where it is iterator. v is recycled if needed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.sumi2sd">
+<code class="descclassname">isosolve.</code><code class="descname">sumi2sd</code><span class="sig-paren">(</span><em>covmat</em>, <em>i</em>, <em>tol=2.842170943040401e-14</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.sumi2sd" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate sd for a new variable defined as sum of components in ‘i’</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.timeme">
+<code class="descclassname">isosolve.</code><code class="descname">timeme</code><span class="sig-paren">(</span><em>s=''</em>, <em>dig=2</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.timeme" title="Permalink to this definition">¶</a></dt>
+<dd><p>if a global variable TIMEME is True and another global variable _T0 is set, print current CPU time relative to _T0. This printing is preceded by a message from ‘s’</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="isosolve.useq">
+<code class="descclassname">isosolve.</code><code class="descname">useq</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#isosolve.useq" title="Permalink to this definition">¶</a></dt>
+<dd><p>return iterator of unique elements in a sequence preserving initial order</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="manual.html"> User's manual</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html"> API documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">isosolve module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="previous chapter">API documentation</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="API documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IsoSolve 0.9.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >API documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, INRAE/INSA/CNRS.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>
