@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="referrer" content="no-referrer" />
+    <meta name="referrer" content="unsafe-url" />
+    <meta name="referrer" content="origin" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <title>SymNmrMs</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Helvetica,Arial,sans-serif;
+        }
+        code, pre {
+            font-family: monospace;
+        }
+        table {
+          border-collapse: collapse;
+        }
+        table, th, td {
+          border: 1px solid black;
+          padding: 5px;
+        }
+        th {
+          background-color: #e0e0e0;
+          text-align: center;
+        }
+        tr:nth-child(even) {background-color: #f2f2f2;}
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Symbolic Resolution of Labeled Measurements</h1>
+<h1>Contents</h1>
+<ul>
+<li><a href="#symnmrms">SymNmrMs</a><ul>
+<li><a href="#problem-setup">Problem setup</a></li>
+<li><a href="#solution">Solution</a></li>
+<li><a href="#system-status">System Status</a></li>
+<li><a href="#redundant-measurements">Redundant measurements</a></li>
+<li><a href="#measurable-elementary-combinations">Measurable elementary combinations</a></li>
+<li><a href="#least-squares">Least Squares</a></li>
+</ul>
+</li>
+</ul>
+<p><a name="symnmrms"></a></p>
+<h1>SymNmrMs</h1>
+<p><a name="problem-setup"></a></p>
+<h2>Problem setup</h2>
+<p><a name="used-arguments"></a></p>
+<h3>Used arguments</h3>
+<pre><code>'-t' 'example/ALA_mapping.tsv' '-d' 'example/ALA_measurements.tsv'
+</code></pre>
+<p><a name="available-measurements"></a></p>
+<h3>Available measurements</h3>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">HSQC_Ca</th>
+<th align="center">HSQC_Cb</th>
+<th align="center">HACO</th>
+<th align="center">JRES_Ha</th>
+<th align="center">JRES_Hb</th>
+<th align="center">HACO-DIPSY</th>
+<th align="center">GC-MS</th>
+<th align="center">LC-MS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">000</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">e</td>
+<td align="center">t</td>
+<td align="center"></td>
+<td align="center">o</td>
+<td align="center">g</td>
+</tr>
+<tr>
+<td align="center">001</td>
+<td align="center"></td>
+<td align="center">k</td>
+<td align="center"></td>
+<td align="center">e</td>
+<td align="center">u</td>
+<td align="center"></td>
+<td align="center">p</td>
+<td align="center">h</td>
+</tr>
+<tr>
+<td align="center">100</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">r</td>
+<td align="center">e</td>
+<td align="center">t</td>
+<td align="center"></td>
+<td align="center">o</td>
+<td align="center">h</td>
+</tr>
+<tr>
+<td align="center">101</td>
+<td align="center"></td>
+<td align="center">k</td>
+<td align="center">r</td>
+<td align="center">e</td>
+<td align="center">u</td>
+<td align="center"></td>
+<td align="center">p</td>
+<td align="center">i</td>
+</tr>
+<tr>
+<td align="center">010</td>
+<td align="center">a</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">f</td>
+<td align="center">t</td>
+<td align="center">m</td>
+<td align="center">p</td>
+<td align="center">h</td>
+</tr>
+<tr>
+<td align="center">011</td>
+<td align="center">b</td>
+<td align="center">l</td>
+<td align="center"></td>
+<td align="center">f</td>
+<td align="center">u</td>
+<td align="center">m</td>
+<td align="center">q</td>
+<td align="center">i</td>
+</tr>
+<tr>
+<td align="center">110</td>
+<td align="center">c</td>
+<td align="center"></td>
+<td align="center">s</td>
+<td align="center">f</td>
+<td align="center">t</td>
+<td align="center">n</td>
+<td align="center">p</td>
+<td align="center">i</td>
+</tr>
+<tr>
+<td align="center">111</td>
+<td align="center">d</td>
+<td align="center">l</td>
+<td align="center">s</td>
+<td align="center">f</td>
+<td align="center">u</td>
+<td align="center">n</td>
+<td align="center">q</td>
+<td align="center">j</td>
+</tr>
+</tbody>
+</table>
+<p><a name="equation-system"></a></p>
+<h3>Equation system</h3>
+<p>i000 + i001 + i100 + i101 + i010 + i011 + i110 + i111 = 1<br>
+a·(i010 + i011 + i110 + i111) - i010 = 0<br>
+b·(i010 + i011 + i110 + i111) - i011 = 0<br>
+c·(i010 + i011 + i110 + i111) - i110 = 0<br>
+d·(i010 + i011 + i110 + i111) - i111 = 0<br>
+-i001 - i101 + k·(i001 + i011 + i101 + i111) = 0<br>
+-i011 - i111 + l·(i001 + i011 + i101 + i111) = 0<br>
+-i100 - i101 + r·(i100 + i101 + i110 + i111) = 0<br>
+-i110 - i111 + s·(i100 + i101 + i110 + i111) = 0<br>
+e - i000 - i001 - i100 - i101 = 0<br>
+f - i010 - i011 - i110 - i111 = 0<br>
+-i000 - i010 - i100 - i110 + t = 0<br>
+-i001 - i011 - i101 - i111 + u = 0<br>
+-i010 - i011 + m·(i010 + i011 + i110 + i111) = 0<br>
+-i110 - i111 + n·(i010 + i011 + i110 + i111) = 0<br>
+-i000 - i100 + o = 0<br>
+-i001 - i010 - i101 - i110 + p = 0<br>
+-i011 - i111 + q = 0<br>
+g - i000 = 0<br>
+h - i001 - i010 - i100 = 0<br>
+i - i011 - i101 - i110 = 0<br>
+-i111 + j = 0<br>
+<a name="solution"></a></p>
+<h2>Solution</h2>
+<p><a name="isotopomers"></a></p>
+<h3>Isotopomers</h3>
+<table>
+<thead>
+<tr>
+<th align="center">variable</th>
+<th align="center">formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">000</td>
+<td align="center">g</td>
+</tr>
+<tr>
+<td align="center">001</td>
+<td align="center">g + h - j·m - n·(-f + j) - t</td>
+</tr>
+<tr>
+<td align="center">100</td>
+<td align="center">-g + o</td>
+</tr>
+<tr>
+<td align="center">101</td>
+<td align="center">i + j·(m + 1) + n·(-f + j) - q</td>
+</tr>
+<tr>
+<td align="center">010</td>
+<td align="center">j·m + n·(-f + j) - o + t</td>
+</tr>
+<tr>
+<td align="center">011</td>
+<td align="center">-j + q</td>
+</tr>
+<tr>
+<td align="center">110</td>
+<td align="center">-j·m - n·(-f + j)</td>
+</tr>
+<tr>
+<td align="center">111</td>
+<td align="center">j</td>
+</tr>
+</tbody>
+</table>
+<p><a name="emu"></a></p>
+<h3>EMU</h3>
+<table>
+<thead>
+<tr>
+<th align="center">variable</th>
+<th align="center">Exx</th>
+<th align="center">xEx</th>
+<th align="center">xxE</th>
+<th align="center">EEx</th>
+<th align="center">ExE</th>
+<th align="center">xEE</th>
+<th align="center">EEE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">M+0</td>
+<td align="center">2·g + h - j - o + q</td>
+<td align="center">e</td>
+<td align="center">t</td>
+<td align="center">2·g + h - j·m - n·(-f + j) - t</td>
+<td align="center">g + j·m + n·(-f + j) - o + t</td>
+<td align="center">o</td>
+<td align="center">g</td>
+</tr>
+<tr>
+<td align="center">M+1</td>
+<td align="center">-g + i + 2·j + o - q</td>
+<td align="center">f</td>
+<td align="center">u</td>
+<td align="center">-g + i + 2·j·m + 2·n·(-f + j) + t</td>
+<td align="center">h - j·(2·m + 1) - 2·n·(-f + j) - p + u</td>
+<td align="center">p</td>
+<td align="center">h</td>
+</tr>
+<tr>
+<td align="center">M+2</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">f·n</td>
+<td align="center">i + j·(m + 2) + n·(-f + j) - q</td>
+<td align="center">q</td>
+<td align="center">i</td>
+</tr>
+<tr>
+<td align="center">M+3</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">j</td>
+</tr>
+</tbody>
+</table>
+<p><a name="cumomers"></a></p>
+<h3>Cumomers</h3>
+<table>
+<thead>
+<tr>
+<th align="center">variable</th>
+<th align="center">formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1xx</td>
+<td align="center">-g + i + 2·j + o - q</td>
+</tr>
+<tr>
+<td align="center">x1x</td>
+<td align="center">f</td>
+</tr>
+<tr>
+<td align="center">xx1</td>
+<td align="center">u</td>
+</tr>
+<tr>
+<td align="center">11x</td>
+<td align="center">f·n</td>
+</tr>
+<tr>
+<td align="center">1x1</td>
+<td align="center">i + j·(m + 2) + n·(-f + j) - q</td>
+</tr>
+<tr>
+<td align="center">x11</td>
+<td align="center">q</td>
+</tr>
+<tr>
+<td align="center">111</td>
+<td align="center">j</td>
+</tr>
+</tbody>
+</table>
+<p><a name="system-status"></a></p>
+<h2>System Status</h2>
+<p>The system is <em>over-determined</em>.</p>
+<p>The reason is that following measurements were not used: <em>a</em>, <em>b</em>, <em>c</em>, <em>d</em>, <em>e</em>, <em>f</em>, <em>k</em>, <em>l</em>, <em>r</em>, <em>s</em>.</p>
+<p>Number of redundant measurements: 10.<br>
+<a name="redundant-measurements"></a></p>
+<h2>Redundant measurements</h2>
+<table>
+<thead>
+<tr>
+<th align="center">Measurement</th>
+<th align="center">Formula</th>
+<th align="left">Methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">a</td>
+<td align="center">(j·m + n·(j + o - q - t) - o + t)/(-o + q + t)</td>
+<td align="left">HSQC_Ca: <em>GC-MS, HACO-DIPSY, JRES_Hb, LC-MS</em></td>
+</tr>
+<tr>
+<td align="center">b</td>
+<td align="center">(-j + q)/(-o + q + t)</td>
+<td align="left">HSQC_Ca: <em>GC-MS, JRES_Hb, LC-MS</em></td>
+</tr>
+<tr>
+<td align="center">c</td>
+<td align="center">(-j·m - n·(j + o - q - t))/(-o + q + t)</td>
+<td align="left">HSQC_Ca: <em>GC-MS, HACO-DIPSY, JRES_Hb, LC-MS</em></td>
+</tr>
+<tr>
+<td align="center">d</td>
+<td align="center">j/(-o + q + t)</td>
+<td align="left">HSQC_Ca: <em>GC-MS, JRES_Hb, LC-MS</em></td>
+</tr>
+<tr>
+<td align="center">e</td>
+<td align="center">o - q + u</td>
+<td align="left">JRES_Ha: <em>GC-MS, JRES_Hb</em></td>
+</tr>
+<tr>
+<td align="center">f</td>
+<td align="center">-o + q + t</td>
+<td align="left">JRES_Ha: <em>GC-MS, JRES_Hb</em></td>
+</tr>
+<tr>
+<td align="center">k</td>
+<td align="center">-(q - u)/u</td>
+<td align="left">HSQC_Cb: <em>GC-MS, JRES_Hb</em></td>
+</tr>
+<tr>
+<td align="center">l</td>
+<td align="center">q/u</td>
+<td align="left">HSQC_Cb: <em>GC-MS, JRES_Hb</em></td>
+</tr>
+<tr>
+<td align="center">r</td>
+<td align="center">(g - i - j·(m + 1) - n·(j + o - q - t) - o + q)/(g - i - 2·j - o + q)</td>
+<td align="left">HACO: <em>GC-MS, HACO-DIPSY, JRES_Hb, LC-MS</em></td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center">-n·(-o + q + t)/(g - i - 2·j - o + q)</td>
+<td align="left">HACO: <em>GC-MS, HACO-DIPSY, JRES_Hb, LC-MS</em></td>
+</tr>
+</tbody>
+</table>
+<p><a name="measurable-elementary-combinations"></a></p>
+<h2>Measurable elementary combinations</h2>
+<table>
+<thead>
+<tr>
+<th align="center">N°</th>
+<th align="center">Combination</th>
+<th align="center">Accumulated</th>
+<th align="center">Formula</th>
+<th align="center">Methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="center">000</td>
+<td align="center">000</td>
+<td align="center">g</td>
+<td align="center">LC-MS</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">001</td>
+<td align="center">001</td>
+<td align="center">g + h - j·m - n·(-f + j) - t</td>
+<td align="center">HACO-DIPSY, JRES_Ha, JRES_Hb, LC-MS</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">100</td>
+<td align="center">100</td>
+<td align="center">-g + o</td>
+<td align="center">GC-MS, LC-MS</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">101</td>
+<td align="center">101</td>
+<td align="center">i + j·(m + 1) + n·(-f + j) - q</td>
+<td align="center">GC-MS, HACO-DIPSY, JRES_Ha, LC-MS</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">010</td>
+<td align="center">010</td>
+<td align="center">j·m + n·(-f + j) - o + t</td>
+<td align="center">GC-MS, HACO-DIPSY, JRES_Ha, JRES_Hb, LC-MS</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">011</td>
+<td align="center">011</td>
+<td align="center">-j + q</td>
+<td align="center">GC-MS, LC-MS</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">110</td>
+<td align="center">110</td>
+<td align="center">-j·m - n·(-f + j)</td>
+<td align="center">HACO-DIPSY, JRES_Ha, LC-MS</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">111</td>
+<td align="center">111</td>
+<td align="center">j</td>
+<td align="center">LC-MS</td>
+</tr>
+</tbody>
+</table>
+<p><a name="least-squares"></a></p>
+<h2>Least Squares</h2>
+<p><a name="problem-summary"></a></p>
+<h3>Problem summary</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Item</th>
+<th align="center">Value</th>
+<th align="center">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">number of measurements</td>
+<td align="center">21</td>
+<td align="center">m</td>
+</tr>
+<tr>
+<td align="center">system rank (number of statistically defined parameters)</td>
+<td align="center">7</td>
+<td align="center">p</td>
+</tr>
+<tr>
+<td align="center">degree of freedom</td>
+<td align="center">14</td>
+<td align="center">dof=m - p</td>
+</tr>
+<tr>
+<td align="center">χ²(14)</td>
+<td align="center">3.179</td>
+<td align="center">Σ((estimated-measured)/sd)²<br/>95% confidence interval is [0; 24]</td>
+</tr>
+<tr>
+<td align="center">χ²(14)/14</td>
+<td align="center">0.227</td>
+<td align="center">Reduced χ², χ²(dof)/dof: if ≫ 1 then poor fitting, ~ 1 means &lsquo;good&rsquo; fitting and ≪ 1 means over-fitting or overestimating sd</td>
+</tr>
+<tr>
+<td align="center">p-value of one-tail χ² test, i.e.<br/>P(χ²(14) &gt; 3.179)</td>
+<td align="center">0.999</td>
+<td align="center">Value close to 0 (e.g. under 0.05) means poor fitting. Value close to 1 can be an evidence for over-fitting or that sd are overestimated. It can be NaN (not a number) for dof=0</td>
+</tr>
+</tbody>
+</table>
+<p><a name="measured-values"></a></p>
+<h3>Measured values</h3>
+<table>
+<thead>
+<tr>
+<th align="center">name</th>
+<th align="center">sd</th>
+<th align="center">value</th>
+<th align="center">estimated</th>
+<th align="center">(estimated - value)/sd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">a</td>
+<td align="center">0.02004</td>
+<td align="center">0.254</td>
+<td align="center">0.249</td>
+<td align="center">-0.25475</td>
+</tr>
+<tr>
+<td align="center">b</td>
+<td align="center">0.02004</td>
+<td align="center">0.254</td>
+<td align="center">0.244</td>
+<td align="center">-0.49063</td>
+</tr>
+<tr>
+<td align="center">c</td>
+<td align="center">0.02004</td>
+<td align="center">0.248</td>
+<td align="center">0.248</td>
+<td align="center">-0.0216</td>
+</tr>
+<tr>
+<td align="center">d</td>
+<td align="center">0.02004</td>
+<td align="center">0.244</td>
+<td align="center">0.26</td>
+<td align="center">0.76697</td>
+</tr>
+<tr>
+<td align="center">k</td>
+<td align="center">0.02</td>
+<td align="center">0.497</td>
+<td align="center">0.496</td>
+<td align="center">-0.04218</td>
+</tr>
+<tr>
+<td align="center">l</td>
+<td align="center">0.02</td>
+<td align="center">0.503</td>
+<td align="center">0.504</td>
+<td align="center">0.04218</td>
+</tr>
+<tr>
+<td align="center">r</td>
+<td align="center">0.03</td>
+<td align="center">0.502</td>
+<td align="center">0.511</td>
+<td align="center">0.29765</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center">0.03</td>
+<td align="center">0.498</td>
+<td align="center">0.489</td>
+<td align="center">-0.29765</td>
+</tr>
+<tr>
+<td align="center">e</td>
+<td align="center">0.03</td>
+<td align="center">0.51</td>
+<td align="center">0.497</td>
+<td align="center">-0.42222</td>
+</tr>
+<tr>
+<td align="center">f</td>
+<td align="center">0.03</td>
+<td align="center">0.49</td>
+<td align="center">0.503</td>
+<td align="center">0.42222</td>
+</tr>
+<tr>
+<td align="center">t</td>
+<td align="center">0.03</td>
+<td align="center">0.496</td>
+<td align="center">0.497</td>
+<td align="center">0.02311</td>
+</tr>
+<tr>
+<td align="center">u</td>
+<td align="center">0.03</td>
+<td align="center">0.504</td>
+<td align="center">0.503</td>
+<td align="center">-0.02311</td>
+</tr>
+<tr>
+<td align="center">m</td>
+<td align="center">0.03</td>
+<td align="center">0.496</td>
+<td align="center">0.493</td>
+<td align="center">-0.11238</td>
+</tr>
+<tr>
+<td align="center">n</td>
+<td align="center">0.03</td>
+<td align="center">0.504</td>
+<td align="center">0.507</td>
+<td align="center">0.11238</td>
+</tr>
+<tr>
+<td align="center">o</td>
+<td align="center">0.01</td>
+<td align="center">0.25</td>
+<td align="center">0.247</td>
+<td align="center">-0.29363</td>
+</tr>
+<tr>
+<td align="center">p</td>
+<td align="center">0.01</td>
+<td align="center">0.5</td>
+<td align="center">0.499</td>
+<td align="center">-0.05006</td>
+</tr>
+<tr>
+<td align="center">q</td>
+<td align="center">0.01</td>
+<td align="center">0.25</td>
+<td align="center">0.253</td>
+<td align="center">0.34369</td>
+</tr>
+<tr>
+<td align="center">g</td>
+<td align="center">0.01</td>
+<td align="center">0.117</td>
+<td align="center">0.122</td>
+<td align="center">0.533</td>
+</tr>
+<tr>
+<td align="center">h</td>
+<td align="center">0.01</td>
+<td align="center">0.355</td>
+<td align="center">0.358</td>
+<td align="center">0.34705</td>
+</tr>
+<tr>
+<td align="center">i</td>
+<td align="center">0.01</td>
+<td align="center">0.387</td>
+<td align="center">0.389</td>
+<td align="center">0.16109</td>
+</tr>
+<tr>
+<td align="center">j</td>
+<td align="center">0.01</td>
+<td align="center">0.141</td>
+<td align="center">0.131</td>
+<td align="center">-1.04114</td>
+</tr>
+</tbody>
+</table>
+<p><a name="redundant-measurements"></a></p>
+<h3>Redundant measurements</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Measurement</th>
+<th align="center">Measured Value</th>
+<th align="center">Formula Applied</th>
+<th align="center">Δ=FA-MV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">a</td>
+<td align="center">0.254</td>
+<td align="center">0.276</td>
+<td align="center">0.023</td>
+</tr>
+<tr>
+<td align="center">b</td>
+<td align="center">0.254</td>
+<td align="center">0.220</td>
+<td align="center">-0.034</td>
+</tr>
+<tr>
+<td align="center">c</td>
+<td align="center">0.248</td>
+<td align="center">0.219</td>
+<td align="center">-0.028</td>
+</tr>
+<tr>
+<td align="center">d</td>
+<td align="center">0.244</td>
+<td align="center">0.285</td>
+<td align="center">0.040</td>
+</tr>
+<tr>
+<td align="center">e</td>
+<td align="center">0.51</td>
+<td align="center">0.504</td>
+<td align="center">-0.006</td>
+</tr>
+<tr>
+<td align="center">f</td>
+<td align="center">0.49</td>
+<td align="center">0.496</td>
+<td align="center">0.006</td>
+</tr>
+<tr>
+<td align="center">k</td>
+<td align="center">0.497</td>
+<td align="center">0.504</td>
+<td align="center">0.007</td>
+</tr>
+<tr>
+<td align="center">l</td>
+<td align="center">0.503</td>
+<td align="center">0.496</td>
+<td align="center">-0.007</td>
+</tr>
+<tr>
+<td align="center">r</td>
+<td align="center">0.502</td>
+<td align="center">0.548</td>
+<td align="center">0.046</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center">0.498</td>
+<td align="center">0.452</td>
+<td align="center">-0.046</td>
+</tr>
+</tbody>
+</table>
+<p><a name="isotopomers"></a></p>
+<h3>Isotopomers</h3>
+<table>
+<thead>
+<tr>
+<th align="center">variable</th>
+<th align="center">value</th>
+<th align="center">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">000</td>
+<td align="center">0.122</td>
+<td align="center">0.00844</td>
+</tr>
+<tr>
+<td align="center">001</td>
+<td align="center">0.108</td>
+<td align="center">0.01277</td>
+</tr>
+<tr>
+<td align="center">100</td>
+<td align="center">0.125</td>
+<td align="center">0.01008</td>
+</tr>
+<tr>
+<td align="center">101</td>
+<td align="center">0.142</td>
+<td align="center">0.01054</td>
+</tr>
+<tr>
+<td align="center">010</td>
+<td align="center">0.125</td>
+<td align="center">0.00867</td>
+</tr>
+<tr>
+<td align="center">011</td>
+<td align="center">0.123</td>
+<td align="center">0.00673</td>
+</tr>
+<tr>
+<td align="center">110</td>
+<td align="center">0.125</td>
+<td align="center">0.00745</td>
+</tr>
+<tr>
+<td align="center">111</td>
+<td align="center">0.131</td>
+<td align="center">0.00584</td>
+</tr>
+</tbody>
+</table>
+<p><a name="cumomers"></a></p>
+<h3>Cumomers</h3>
+<table>
+<thead>
+<tr>
+<th align="center">variable</th>
+<th align="center">value</th>
+<th align="center">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1xx</td>
+<td align="center">0.522</td>
+<td align="center">0.01784</td>
+</tr>
+<tr>
+<td align="center">x1x</td>
+<td align="center">0.503</td>
+<td align="center">0.01021</td>
+</tr>
+<tr>
+<td align="center">xx1</td>
+<td align="center">0.503</td>
+<td align="center">0.0122</td>
+</tr>
+<tr>
+<td align="center">11x</td>
+<td align="center">0.255</td>
+<td align="center">0.00822</td>
+</tr>
+<tr>
+<td align="center">1x1</td>
+<td align="center">0.272</td>
+<td align="center">0.01368</td>
+</tr>
+<tr>
+<td align="center">x11</td>
+<td align="center">0.253</td>
+<td align="center">0.00607</td>
+</tr>
+<tr>
+<td align="center">111</td>
+<td align="center">0.131</td>
+<td align="center">0.00584</td>
+</tr>
+</tbody>
+</table>
+<p><a name="emu-values"></a></p>
+<h3>EMU values</h3>
+<table>
+<thead>
+<tr>
+<th align="center">variable</th>
+<th align="center">Exx</th>
+<th align="center">xEx</th>
+<th align="center">xxE</th>
+<th align="center">EEx</th>
+<th align="center">ExE</th>
+<th align="center">xEE</th>
+<th align="center">EEE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">M+0</td>
+<td align="center">0.478</td>
+<td align="center">0.497</td>
+<td align="center">0.497</td>
+<td align="center">0.23</td>
+<td align="center">0.247</td>
+<td align="center">0.247</td>
+<td align="center">0.122</td>
+</tr>
+<tr>
+<td align="center">M+1</td>
+<td align="center">0.522</td>
+<td align="center">0.503</td>
+<td align="center">0.503</td>
+<td align="center">0.514</td>
+<td align="center">0.48</td>
+<td align="center">0.499</td>
+<td align="center">0.358</td>
+</tr>
+<tr>
+<td align="center">M+2</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.255</td>
+<td align="center">0.272</td>
+<td align="center">0.253</td>
+<td align="center">0.389</td>
+</tr>
+<tr>
+<td align="center">M+3</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.131</td>
+</tr>
+</tbody>
+</table>
+<p><a name="emu-standard-deviations"></a></p>
+<h3>EMU standard deviations</h3>
+<table>
+<thead>
+<tr>
+<th align="center">variable</th>
+<th align="center">Exx</th>
+<th align="center">xEx</th>
+<th align="center">xxE</th>
+<th align="center">EEx</th>
+<th align="center">ExE</th>
+<th align="center">xEE</th>
+<th align="center">EEE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">M+0</td>
+<td align="center">0.01784</td>
+<td align="center">0.01021</td>
+<td align="center">0.0122</td>
+<td align="center">0.01673</td>
+<td align="center">0.01214</td>
+<td align="center">0.00748</td>
+<td align="center">0.00844</td>
+</tr>
+<tr>
+<td align="center">M+1</td>
+<td align="center">0.01784</td>
+<td align="center">0.01021</td>
+<td align="center">0.0122</td>
+<td align="center">0.0163</td>
+<td align="center">0.01818</td>
+<td align="center">0.00733</td>
+<td align="center">0.00903</td>
+</tr>
+<tr>
+<td align="center">M+2</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.00822</td>
+<td align="center">0.01368</td>
+<td align="center">0.00607</td>
+<td align="center">0.00844</td>
+</tr>
+<tr>
+<td align="center">M+3</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.00584</td>
+</tr>
+</tbody>
+</table>
+<p><a name="measurable-combinations"></a></p>
+<h3>Measurable combinations</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Combination</th>
+<th align="center">Accumulated</th>
+<th align="center">value</th>
+<th align="center">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">000</td>
+<td align="center">000</td>
+<td align="center">0.122</td>
+<td align="center">0.00844</td>
+</tr>
+<tr>
+<td align="center">001</td>
+<td align="center">001</td>
+<td align="center">0.108</td>
+<td align="center">0.01277</td>
+</tr>
+<tr>
+<td align="center">100</td>
+<td align="center">100</td>
+<td align="center">0.125</td>
+<td align="center">0.01008</td>
+</tr>
+<tr>
+<td align="center">101</td>
+<td align="center">101</td>
+<td align="center">0.142</td>
+<td align="center">0.01054</td>
+</tr>
+<tr>
+<td align="center">010</td>
+<td align="center">010</td>
+<td align="center">0.125</td>
+<td align="center">0.00867</td>
+</tr>
+<tr>
+<td align="center">011</td>
+<td align="center">011</td>
+<td align="center">0.123</td>
+<td align="center">0.00673</td>
+</tr>
+<tr>
+<td align="center">110</td>
+<td align="center">110</td>
+<td align="center">0.125</td>
+<td align="center">0.00745</td>
+</tr>
+<tr>
+<td align="center">111</td>
+<td align="center">111</td>
+<td align="center">0.131</td>
+<td align="center">0.00584</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h5>Legal information</h5>
+<p style="font-size: small; padding: 5px">This content is produced by <tt>IsoSolve</tt> script (0.9.3) on Tue, 02 Mar 2021 08:35:28 in 1.18s.<br>
+The script is written by Serguei Sokol &lt;sokol [at] insa-toulouse [dot] fr&gt; and it is a result of a collaboration between Mathematics Cell and MetaSys team, namely Pierre Millard at TBI (Toulouse Biotechnology Institute, Bio & Chemical Engineering).<br>
+The copyright notice hereafter is relative to the script IsoSolve, not to the content of this page:<br>
+Copyright © 2021, INRAE/INSA/CNRS.<br>
+<tt>IsoSolve</tt> is released under <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html">GPL-2 license</a>.<br>
+Follow this link for <a href="https://github.com/sgsokol/isosolve/issues">issue tracking</a>.
+</p>
+</body>
+</html>
+
