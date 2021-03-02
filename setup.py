@@ -19,7 +19,7 @@ setup(
    py_modules=['isosolve'],
    package_dir={'isosolve': '.'},
    package_data={
-        'isosolve': ['version.txt', 'ALA_mapping.tsv', 'ALA_measurements.tsv', 'ALA_mapping.html'],
+        'isosolve': ['version.txt', 'doc/*', 'example/*'],
    },
    install_requires=['sympy', 'markdown', 'numpy', 'scipy', 'pandas', 'nlsic'],
    dependency_links=[
