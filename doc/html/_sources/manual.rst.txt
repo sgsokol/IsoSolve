@@ -229,4 +229,4 @@ After that, you are ready to examine and execute the notebook by launching:
   jupyter notebook IsoSolve.ipynb
 
 After launching, the notebook will open in your web browser where in each cell you can read/modify/execute a proposed code as well as read accompanying comments.
-Some cells can take a while to execute, so we distribute also an HTML file showing the whole `notebook's output <IsoSolve.html>`_ after execution. Your own output should be similar to this one.
+Some cells can take a while to execute, so we distribute also an HTML file showing the whole `notebook's output <notebook.html>`_ after execution. Your own output should be similar to this one.
