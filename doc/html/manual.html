@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>User’s manual &#8212; IsoSolve 1.0.0 documentation</title>
+    <title>User’s manual &#8212; IsoSolve 1.0.3 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.0',
+        VERSION:     '1.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="IsoSolve’s documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">IsoSolve 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">IsoSolve 1.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -267,7 +267,7 @@ brew install gcc
 <li>each variable name can appear multiple times in a given column but not in different columns. If a variable appears in several rows, these rows are considered as mixed in equal parts in a given measurement method. E.g. in HSQC_Cb, contributions of patterns <code class="docutils literal"><span class="pre">001</span></code> and <code class="docutils literal"><span class="pre">101</span></code> are mixed in one variable <code class="docutils literal"><span class="pre">k</span></code>, and contributions of <code class="docutils literal"><span class="pre">011</span></code> and <code class="docutils literal"><span class="pre">111</span></code> are mixed in another one, <code class="docutils literal"><span class="pre">l</span></code>. Other rows in this column must be left empty as they don’t contribute to any measurement.</li>
 </ul>
 </div></blockquote>
-<p>In the above example, running IsoSolve will produce two files: <code class="docutils literal"><span class="pre">ALA_mapping.md</span></code> (plain text, MarkDown format) and <code class="docutils literal"><span class="pre">ALA_mapping.html</span></code>. The latter should automatically open in your browser. If not, open it manually. This output file contains formulas for definition of isotopomers, cumomers, and EMUs (ICE) depending on provided measurements. An analysis is made to determine how many of each ICE can be defined by measurements and which are still undefined. The file content is quite self-explanatory. If everything worked as expected it should be similar to <a class="reference external" href="https://github.com/sgsokol/IsoSolve/raw/main/example/ALA_mapping.html">ALA_mapping.html</a>. Small differences are allowed, e.g. the redundant measurements maybe not the same as in the example file but their number (10) should coincide.</p>
+<p>In the above example, running IsoSolve will produce two files: <code class="docutils literal"><span class="pre">ALA_mapping.md</span></code> (plain text, MarkDown format) and <code class="docutils literal"><span class="pre">ALA_mapping.html</span></code>. The latter should automatically open in your browser. If not, open it manually. This output file contains formulas for definition of isotopomers, cumomers, and EMUs (ICE) depending on provided measurements. An analysis is made to determine how many of each ICE can be defined by measurements and which are still undefined. The file content is quite self-explanatory. If everything worked as expected it should be similar to <a class="reference external" href="https://htmlpreview.github.io/?https://github.com/sgsokol/IsoSolve/blob/main/example/ALA_mapping.html">ALA_mapping.html</a>. Small differences are allowed, e.g. the redundant measurements maybe not the same as in the example file but their number (10) should coincide.</p>
 <p>If <code class="docutils literal"><span class="pre">--inchi</span></code> option is activated, it will produce a series of additional TSV files having <code class="docutils literal"><span class="pre">_inchi_</span></code> in their names. They will contain International Chemical Identifiers (InChI) for involved isotopomers, cumomers and EMUs as well as for elementary measurable combinations. It is important to note that atom numbers used in those InChI are relative to only carbon atoms numbered from left to right in the label masks provided by user in his input file. It is up to user to renumber them according to conventional numbering appropriate to the used molecule.</p>
 <p>For elementary measurable combinations, InChI file can contain entries with multiple isotopomers in them. To be able to put one isotopomer per row, an additional column <code class="docutils literal"><span class="pre">Group</span> <span class="pre">Id</span></code> is introduced. The rows having identical entries in <code class="docutils literal"><span class="pre">Group</span> <span class="pre">Id</span></code> must be grouped together.</p>
 <p>For fine-tuning <code class="docutils literal"><span class="pre">isosolve</span></code> usage, read the following section about command line options. For programmatic use, see the section <a class="reference internal" href="modules.html#api"><span class="std std-ref">API documentation</span></a>.</p>
@@ -383,7 +383,7 @@ We showcase IsoSolve usage in a Jupyter notebook distributed via this <a class="
 </pre></div>
 </div>
 <p>After launching, the notebook will open in your web browser where in each cell you can read/modify/execute a proposed code as well as read accompanying comments.
-Some cells can take a while to execute, so we distribute also an HTML file showing the whole <a class="reference external" href="notebook.html">notebook’s output</a> after execution. Your own output should be similar to this one.</p>
+Some cells can take a while to execute, so we distribute also an HTML file showing the whole <a class="reference external" href="https://htmlpreview.github.io/?https://github.com/MetaSys-LISBP/IsoSolve_notebook/blob/main/html/IsoSolve_notebook.html">notebook’s output</a> after execution. Your own output should be similar to this one.</p>
 </div>
 </div>
 
@@ -444,7 +444,7 @@ Some cells can take a while to execute, so we distribute also an HTML file showi
         <li class="right" >
           <a href="index.html" title="IsoSolve’s documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">IsoSolve 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">IsoSolve 1.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
