@@ -218,7 +218,7 @@ Some dependencies are specific to our notebook, not to IsoSolve itself. If not a
 
 .. code-block:: shell
 
-  pip3 install --user seaborn mathplotlib
+  pip3 install --user seaborn matplotlib
   
 Download and unpack the notebook's `tarball <https://github.com/MetaSys-LISBP/IsoSolve_notebook/archive/main.tar.gz>`_ and go in a shell to the notebook's directory.
   
